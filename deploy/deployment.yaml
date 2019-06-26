@@ -20,14 +20,12 @@ spec:
     spec:
       containers:
       - name: demoapp
-        image: mtrojanowskikainos/aadflexdemo:latest
+        image: mtrojanowskikainos/aadflexdemo:1.1
         env:
         - name: AZURE_KEYVAULT_NAME
-          value: keyvaultk8s
+          value: mt-dev3-kv
         - name: AZURE_KEYVAULT_SECRET_NAME
           value: mySecret
-        - name: AZURE_KEYVAULT_SECRET_VERSION
-          value: a1b2456e4ffc45be9239611f357a4321
 ---
 apiVersion: v1
 kind: Service
