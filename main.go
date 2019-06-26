@@ -14,7 +14,7 @@ import (
 	
 )
 
-const fileSecret = "/kvmnt"
+const fileSecret = "/kvmnt/mySecret"
 func hello(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "Azure AD Pod Identity + Keyvault Flex Volume mount demo")
 }

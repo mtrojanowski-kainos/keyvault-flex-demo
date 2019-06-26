@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: demoapp
-    aadpodidbinding: keyvaultsampleidentity
+    aadpodidbinding: demoapp
   name: demoapp
   namespace: default
 spec:
@@ -15,17 +15,33 @@ spec:
     metadata:
       labels:
         app: demoapp
-        aadpodidbinding: keyvaultsampleidentity
+        aadpodidbinding: demoapp
       name: demoapp
     spec:
       containers:
       - name: demoapp
-        image: mtrojanowskikainos/aadflexdemo:1.1
+        image: mtrojanowskikainos/aadflexdemo:1.3
         env:
         - name: AZURE_KEYVAULT_NAME
           value: mt-dev3-kv
         - name: AZURE_KEYVAULT_SECRET_NAME
           value: mySecret
+        volumeMounts:
+          - name: secretvolume
+            mountPath: /kvmnt
+            readOnly: true
+      volumes:
+        - name: secretvolume
+          flexVolume:
+            driver: "azure/kv"
+            options:
+              usepodidentity: "true"                   
+              keyvaultname: "mt-dev3-kv"              
+              keyvaultobjectnames: "mySecret"         
+              keyvaultobjecttypes: secret               
+              resourcegroup: "mt-dev3-rg"        
+              subscriptionid: "a6b3fa2c-9c4b-494e-80ca-b3b1e84ef869"
+              tenantid: "mtbench"
 ---
 apiVersion: v1
 kind: Service
